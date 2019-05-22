@@ -34,9 +34,7 @@ def hello():
 
 """
 
-        print(slide.fields())
         if "duration" in slide.fields():
-            print("yo")
             renderedRichText += '<section data-autoslide="{0}">'.format(
                 slide.duration * 1000
             )

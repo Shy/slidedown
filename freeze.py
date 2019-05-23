@@ -7,7 +7,6 @@ DELIVERY_API_KEY = "8b9ddca4bfaa8e3f68520e1211700c6b0fbee29459e7d5b5c776626a3230
 
 client = contentful.Client(SPACE_ID, DELIVERY_API_KEY)
 
-app.config['FREEZER_IGNORE_MIMETYPE_WARNINGS']=True
 freezer = Freezer(app)
 
 

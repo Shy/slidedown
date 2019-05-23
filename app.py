@@ -11,12 +11,6 @@ client = contentful.Client(SPACE_ID, DELIVERY_API_KEY)
 
 app = Flask(__name__)
 
-
-@app.route("/")
-def home():
-    return deck_by_id(deck_id="3hPCvDC6URrqtst7zNMkqI")
-
-
 @app.errorhandler(404)
 def page_not_found():
     # note that we set the 404 status explicitly
@@ -27,7 +21,7 @@ def page_not_found():
     )
 
 
-@app.route("/<string:deck_id>/")
+@app.route("/<string:deck_id>.md")
 def deck_by_id(deck_id):
     try:
         entry = client.entry(deck_id)

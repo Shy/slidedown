@@ -1,15 +1,17 @@
 from flask import Flask, request
 import contentful
+import os
 from rich_text_renderer import RichTextRenderer
 
 renderer = RichTextRenderer()
 
-SPACE_ID = "jokk403r56yp"
-DELIVERY_API_KEY = "8b9ddca4bfaa8e3f68520e1211700c6b0fbee29459e7d5b5c776626a3230e8d0"
+SPACE_ID = os.environ.get("SPACE_ID")
+DELIVERY_API_KEY = os.environ.get("DELIVERY_API_KEY")
 
 client = contentful.Client(SPACE_ID, DELIVERY_API_KEY)
 
 app = Flask(__name__)
+
 
 @app.errorhandler(404)
 def page_not_found():

@@ -13,16 +13,26 @@ app = Flask(__name__)
 
 
 @app.route("/")
-def hello():
-    deck_id = request.args.get("deck", default="3hPCvDC6URrqtst7zNMkqI", type=str)
+def home():
+    return deck_by_id(deck_id="3hPCvDC6URrqtst7zNMkqI")
+
+
+@app.errorhandler(404)
+def page_not_found():
+    # note that we set the 404 status explicitly
+    return (
+        "# Slide Deck Does not Exist",
+        200,
+        {"Content-Type": "text/markdown", "Access-Control-Allow-Origin": "*"},
+    )
+
+
+@app.route("/<string:deck_id>/")
+def deck_by_id(deck_id):
     try:
         entry = client.entry(deck_id)
     except:
-        return (
-            "# Slide Deck Does not Exist",
-            200,
-            {"Content-Type": "text/markdown", "Access-Control-Allow-Origin": "*"},
-        )
+        return page_not_found()
 
     slides = entry.slides
     renderedRichText = ""
@@ -33,7 +43,6 @@ def hello():
 ---
 
 """
-
         if "duration" in slide.fields():
             renderedRichText += '<section data-autoslide="{0}">'.format(
                 slide.duration * 1000
